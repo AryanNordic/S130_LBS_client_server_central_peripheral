@@ -33,19 +33,19 @@ not very difficult to achieve it taking this project as starting point.
 
 This example is made to work with PCA100028 and if you want to test it on other boards, then configurations for LEDS and buttons needs to be changed and include the correct header files.
 Below is how it looks on board PCA10028 and how they are assigned in the application
-LEDS:
+LEDS:  
 
-   scanning/advertising  -->  LED1   LED2 <---Connected
-                               o      o
-                               o      0
-   notification_from_peer-->  LED3   LED4 <- write from peer
+   scanning/advertising  -->  LED1   LED2 <---Connected  
+                               o      o  
+                               o      0  
+   notification_from_peer-->  LED3   LED4 <- write from peer  
 
 
-Buttons:
-   Wakeup from IDLE/Sleep -> Button1   Button2 <--notification from peer
-                                O         O
-                                O         O
-   Write to peer          -> Button3   Button4 <--not used
+Buttons:  
+   Wakeup from IDLE/Sleep -> Button1   Button2 <--notification from peer  
+                                O         O  
+                                O         O  
+   Write to peer          -> Button3   Button4 <--not used  
  
 The buttons and leds operations are completely symetric on both central and peripheral except for advertising/scanning LED.
 Central looks for an advertiser with the device name "LedButtonDemo" and connects to it. As soon as this is done, both peripheral and central discovers service on the other and enables all the services.
