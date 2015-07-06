@@ -432,7 +432,6 @@ static void advertising_start(void)
 {
     uint32_t             err_code;
     ble_gap_adv_params_t adv_params;
-    static int i = 0;
 
     // Start advertising
     memset(&adv_params, 0, sizeof(adv_params));
@@ -444,10 +443,6 @@ static void advertising_start(void)
     adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
 
     err_code = sd_ble_gap_adv_start(&adv_params);
-    if(err_code != NRF_SUCCESS)
-    {
-        i++;
-    }
     APP_ERROR_CHECK(err_code);
     LED_ON(ADV_SCAN_LED_PIN_NO);
 }
