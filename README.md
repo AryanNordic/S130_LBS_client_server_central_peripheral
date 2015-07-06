@@ -64,6 +64,4 @@ Projects
 Adding projects for both Keil and GCC.
 Tested on Keil 5.15 and GNUTools\4.9 2015q1.
 
-Bugs
-------
-06.07.2015 . Sometimes the device hangs after sometime. we will fix them as time permits. Main intention was to demonstrate how things are done.
+

@@ -432,6 +432,7 @@ static void advertising_start(void)
 {
     uint32_t             err_code;
     ble_gap_adv_params_t adv_params;
+    static int i = 0;
 
     // Start advertising
     memset(&adv_params, 0, sizeof(adv_params));
@@ -443,6 +444,10 @@ static void advertising_start(void)
     adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
 
     err_code = sd_ble_gap_adv_start(&adv_params);
+    if(err_code != NRF_SUCCESS)
+    {
+        i++;
+    }
     APP_ERROR_CHECK(err_code);
     LED_ON(ADV_SCAN_LED_PIN_NO);
 }
@@ -818,9 +823,7 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
 
             if (m_peer_count < MAX_PEER_COUNT)
             {
-#ifdef PERIPHERAL
-                advertising_start();
-#else
+#ifdef CENTRAL
                 scan_start();
 #endif
             }
@@ -834,9 +837,7 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
 
             if (m_peer_count == MAX_PEER_COUNT)
             {
-#ifdef PERIPHERAL
-                advertising_start();
-#else
+#ifdef CENTRAL
                 scan_start();
 #endif
             }
@@ -945,6 +946,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
             err_code = ble_lbs_notif_button_change(&m_lbs, button_action);
             if (err_code != NRF_SUCCESS &&
                 err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
+                err_code != BLE_ERROR_NO_TX_BUFFERS && // best would be wait for BLE_EVT_TX_COMPLETE and try again here
                 err_code != NRF_ERROR_INVALID_STATE)
             {
                 APP_ERROR_CHECK(err_code);
@@ -955,6 +957,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
             err_code = ble_lbs_write_button_change(&m_lbs, button_action);
             if (err_code != NRF_SUCCESS &&
                 err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
+                err_code != BLE_ERROR_NO_TX_BUFFERS && // best would be wait for BLE_EVT_TX_COMPLETE and try again here
                 err_code != NRF_ERROR_INVALID_STATE)
             {
                 APP_ERROR_CHECK(err_code);
