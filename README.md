@@ -1,4 +1,4 @@
-S130-ble-app-lbs
+S130_LBS_client_server_central_peripheral
 ======================
 This example shows how a S130 softdevice can be set up with the same structure as the SDK examples. The main goal of thisi project is to demonstrate that S130 softdevice for both central and peripheral configuration.
 
@@ -35,20 +35,21 @@ This example is made to work with PCA100028 and if you want to test it on other 
 Below is how it looks on board PCA10028 and how they are assigned in the application
 LEDS:  
 
-scanning/advertising  -->  LED1
-Connected             -->  LED2
-notification_from_peer-->  LED3
+scanning/advertising  -->  LED1  
+Connected             -->  LED2  
+notification_from_peer-->  LED3  
 write from peer       -->  LED4  
 
 Buttons:  
 Wakeup from IDLE/Sleep --> Button1  
 notification from peer --> Button2  
 Write to peer          --> Button3  
-not used               --> Button4
+not used               --> Button4  
+
  
 The buttons and leds operations are completely symetric on both central and peripheral except for advertising/scanning LED.
 Central looks for an advertiser with the device name "LedButtonDemo" and connects to it. As soon as this is done, both peripheral and central discovers service on the other and enables all the services.
-Two specific serive UUID has been used for both central and peripheral. You can find those in the device_config.h file. There are two characteristic in this service, one for writing to LED and the other for button press notification.
+Two specific service UUID has been used for both central and peripheral. You can find those in the device_config.h file. There are two characteristic in this service, one for writing to LED and the other for button press notification.
 System will go to sleep if no connection is established before timeout. Pressing Button1 after sleep will wake the system up and it will again continue to advertise/scan
 
 Pressing Button2 will write the button value to button charatecteris which has notification properties to it. Hence will send an HVX event to peer. Peer when gets this event writes to LED3. This is to demonstrate how notifications can be used
@@ -65,4 +66,4 @@ Tested on Keil 5.15 and GNUTools\4.9 2015q1.
 
 Bugs
 ------
-Noticed that there are few crashes here and then. we will fix them as time permits. Main intention was to demonstrate how things are done.
+06.07.2015 . Sometimes the device hangs after sometime. we will fix them as time permits. Main intention was to demonstrate how things are done.
